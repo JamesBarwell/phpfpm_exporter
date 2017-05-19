@@ -1,0 +1,18 @@
+version: '2'
+services:
+
+  web:
+    image: amontaigu/nginx-php:5.6.29
+    stdin_open: true
+    volumes:
+      - ./www.conf:/usr/local/etc/php-fpm.d/www.conf:ro
+      - ./default.conf:/etc/nginx/sites-enabled/default.conf:ro
+
+  phpfpm-exporter:
+    image: barwell/phpfpm-exporter
+    ports:
+      - 9202:9202
+    build: ../
+    stdin_open: true
+    environment:
+      PHPFPM_HOST: web

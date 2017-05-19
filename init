@@ -1,0 +1,6 @@
+#!/bin/sh
+
+METRICS_PORT=${METRICS_PORT:-9202}
+
+/phpfpmlogger &
+/bin/mtail -logtostderr -port ${METRICS_PORT} -progs /etc/mtail -logs /var/log/phpfpm.log -alsologtostderr

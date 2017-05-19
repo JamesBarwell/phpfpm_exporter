@@ -1,0 +1,55 @@
+gauge phpfpm_start_since
+gauge phpfpm_accepted_conn
+gauge phpfpm_listen_queue
+gauge phpfpm_max_listen_queue
+gauge phpfpm_listen_queue_len
+gauge phpfpm_idle_processes
+gauge phpfpm_active_processes
+gauge phpfpm_total_processes
+gauge phpfpm_max_active_processes
+gauge phpfpm_max_children_reached
+gauge phpfpm_slow_requests
+
+/start since:\s*(?P<value>\d+)/ {
+  phpfpm_start_since = $value
+}
+
+/accepted conn:\s*(?P<value>\d+)/ {
+  phpfpm_accepted_conn = $value
+}
+
+/listen queue:\s*(?P<value>\d+)/ {
+  phpfpm_listen_queue = $value
+}
+
+/max listen queue:\s*(?P<value>\d+)/ {
+  phpfpm_max_listen_queue = $value
+}
+
+/listen queue len:\s*(?P<value>\d+)/ {
+  phpfpm_listen_queue_len = $value
+}
+
+/idle processes:\s*(?P<value>\d+)/ {
+  phpfpm_idle_processes = $value
+}
+
+/active processes:\s*(?P<value>\d+)/ {
+  phpfpm_active_processes = $value
+}
+
+/total processes:\s*(?P<value>\d+)/ {
+  phpfpm_total_processes = $value
+}
+
+/max active processes:\s*(?P<value>\d+)/ {
+  phpfpm_max_active_processes  = $value
+}
+
+/max children reached:\s*(?P<value>\d+)/ {
+  phpfpm_max_children_reached = $value
+}
+
+/slow requests:\s*(?P<value>\d+)/ {
+  phpfpm_slow_requests = $value
+}

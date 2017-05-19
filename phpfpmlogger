@@ -1,0 +1,17 @@
+#!/bin/sh
+
+PHPFPM_PORT=${PHPFPM_PORT:-80}
+PHPFPM_PATH=${PHPFPM_PATH:-"/status"}
+
+if [ -z ${PHPFPM_HOST} ]; then
+  echo "Error: no PHP-FPM host specified. Please set the 'PHPFPM_HOST' environment variable"
+  exit 1
+fi
+
+URI=${PHPFPM_HOST}:${PHPFPM_PORT}${PHPFPM_PATH}
+echo "php-fpm status URI: ${URI}"
+
+while true; do
+    usr/bin/wget -qO - ${URI} >> /var/log/phpfpm.log
+    /bin/sleep 5
+done
