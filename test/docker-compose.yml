@@ -11,7 +11,7 @@ services:
   phpfpm-exporter:
     image: barwell/phpfpm-exporter
     ports:
-      - 9202:9202
+      - 9253:9253
     build: ../
     stdin_open: true
     environment:

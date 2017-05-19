@@ -10,7 +10,7 @@ Configure the container to point towards your PHP-FPM instance by setting the en
 - PHPFPM_HOST: required, the hostname of the PHP-FPM instance
 - PHPFPM_PORT: optional, the port of the PHP-FPM instance, defaults to 80
 - PHPFPM_PATH: optional, the path to the PHP-FPM status page, defaults to /status
-- METRICS_PORT: optional, the port to expose the metrics interface, defaults to 9202
+- METRICS_PORT: optional, the port to expose the metrics interface, defaults to 9253
 
 The container will poll PHP-FPM on a 5 second interval, and expose the metrics at the path /metrics.
 
@@ -24,4 +24,4 @@ You may need to adjust your webserver config to allow access to this path.
 
 ## Testing
 
-In this project's test directory, there is a script `run` which uses docker-compose to bring up a PHP-FPM webserver and an instance of this exporter. The exporter will bind to localhost 9202 and can be queried at /metrics.
+In this project's test directory, there is a script `run` which uses docker-compose to bring up a PHP-FPM webserver and an instance of this exporter. The exporter will bind to localhost 9253 and can be queried at /metrics.
