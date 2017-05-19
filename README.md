@@ -31,3 +31,29 @@ You may need to adjust your webserver config to allow access to this path.
 ## Testing
 
 In this project's test directory, there is a script `run` which uses docker-compose to bring up a PHP-FPM webserver and an instance of this exporter. The exporter will bind to localhost 9253 and can be queried at /metrics.
+
+## Example output
+
+```
+# TYPE phpfpm_start_since gauge
+phpfpm_start_since{prog="phpfpm.mtail",instance="f206ebacdab4"} 369
+# TYPE phpfpm_accepted_conn gauge
+phpfpm_accepted_conn{prog="phpfpm.mtail",instance="f206ebacdab4"} 74
+# TYPE phpfpm_listen_queue gauge
+phpfpm_listen_queue{prog="phpfpm.mtail",instance="f206ebacdab4"} 0
+# TYPE phpfpm_max_listen_queue gauge
+phpfpm_max_listen_queue{prog="phpfpm.mtail",instance="f206ebacdab4"} 0
+# TYPE phpfpm_listen_queue_len gauge
+phpfpm_listen_queue_len{prog="phpfpm.mtail",instance="f206ebacdab4"} 0
+# TYPE phpfpm_idle_processes gauge
+phpfpm_idle_processes{prog="phpfpm.mtail",instance="f206ebacdab4"} 1
+# TYPE phpfpm_active_processes gauge
+phpfpm_active_processes{prog="phpfpm.mtail",instance="f206ebacdab4"} 1
+# TYPE phpfpm_total_processes gauge
+phpfpm_total_processes{prog="phpfpm.mtail",instance="f206ebacdab4"} 2
+# TYPE phpfpm_max_active_processes gauge
+phpfpm_max_active_processes{prog="phpfpm.mtail",instance="f206ebacdab4"} 1
+# TYPE phpfpm_max_children_reached gauge
+phpfpm_max_children_reached{prog="phpfpm.mtail",instance="f206ebacdab4"} 0
+# TYPE phpfpm_slow_requests gauge
+phpfpm_slow_requests{prog="phpfpm.mtail",instance="f206ebacdab4"} 0```
