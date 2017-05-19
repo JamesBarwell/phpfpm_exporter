@@ -6,6 +6,12 @@ This container will connect to your PHP-FPM server, retrieve its status and make
 
 ## How to use
 
+Run as a docker container:
+
+```
+docker run -e PHPFPM_HOST=mywebserver barwell/phpfpm_exporter -d
+```
+
 Configure the container to point towards your PHP-FPM instance by setting the environment variables:
 - PHPFPM_HOST: required, the hostname of the PHP-FPM instance
 - PHPFPM_PORT: optional, the port of the PHP-FPM instance, defaults to 80
