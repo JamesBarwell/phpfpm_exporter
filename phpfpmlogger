@@ -12,6 +12,14 @@ URI=${PHPFPM_HOST}:${PHPFPM_PORT}${PHPFPM_PATH}
 echo "php-fpm status URI: ${URI}"
 
 while true; do
-    usr/bin/wget -qO - ${URI} >> /var/log/phpfpm.log
+    RESPONSE=$(/usr/bin/wget -qO - ${URI})
+    EXIT_STATUS=$?
+    if [ $EXIT_STATUS != 0 ]; then
+        echo "Error: failed to retrieve status from PHP-FPM. wget exit code was: ${EXIT_STATUS}. wget response was: ${RESPONSE}"
+    else
+        /bin/echo $RESPONSE >> /var/log/phpfpm.log
+    fi
+
     /bin/sleep 5
+
 done
