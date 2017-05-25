@@ -13,12 +13,12 @@ docker run -e PHPFPM_HOST=mywebserver barwell/phpfpm_exporter -d
 ```
 
 Configure the container to point towards your PHP-FPM instance by setting the environment variables:
-- PHPFPM_HOST: required, the host of the PHP-FPM instance
-- PHPFPM_PORT: optional, the port of the PHP-FPM instance, defaults to 80
-- PHPFPM_PATH: optional, the path to the PHP-FPM status page, defaults to "/status"
+- PHPFPM_HOST: required, the PHP-FPM host
+- PHPFPM_PORT: optional, the PHP-FPM status page port, defaults to 80
+- PHPFPM_PATH: optional, the PHP-FPM status page path, defaults to "/status"
 - METRICS_PORT: optional, the port to expose the metrics interface, defaults to 9253
 
-The container will poll PHP-FPM on a 5 second interval, and expose the metrics at the path /metrics.
+The container will poll PHP-FPM on a 5 second interval, and expose the metrics at the path `/metrics`.
 
 ## PHP-FPM and webserver configuration
 
@@ -26,7 +26,7 @@ Please ensure that you set your PHP-FPM and webserver config to allow external a
 
 `pm.status_path = /status`
 
-You may need to adjust your webserver config to allow access to this path.
+You may need to adjust your webserver config to allow access to this path. See the nginx example config below for a suggestion of how it may be configured.
 
 ## Testing
 
@@ -56,4 +56,48 @@ phpfpm_max_active_processes{prog="phpfpm.mtail",instance="f206ebacdab4"} 1
 # TYPE phpfpm_max_children_reached gauge
 phpfpm_max_children_reached{prog="phpfpm.mtail",instance="f206ebacdab4"} 0
 # TYPE phpfpm_slow_requests gauge
-phpfpm_slow_requests{prog="phpfpm.mtail",instance="f206ebacdab4"} 0```
+phpfpm_slow_requests{prog="phpfpm.mtail",instance="f206ebacdab4"} 0
+```
+
+## Example nginx config
+
+For security, I recommend blocking access to the PHP-FPM status page on your public listen port. Set up a separate listener on its own port (9001 in this case) to allow access to the PHP-FPM status page. You can then configure this exporter to access the status page via the dedicated port.
+
+```
+http {
+
+    server {
+        listen 80;
+        server_name www.example.com;
+
+        location ~ ^/status$ {
+            deny all;
+        }
+
+        location / {
+            try_files = $uri @php;
+        }
+
+        location @php {
+          fastcgi_pass 127.0.0.1:9000;
+          fastcgi_index index.php;
+          fastcgi_param SCRIPT_FILENAME $document_root/index.php;
+          include fastcgi_params;
+        }
+    }
+
+    server {
+        listen 9001;
+        server_name fpmstatus;
+
+        access_log off;
+        error_log off;
+
+        location ~ ^/status$ {
+            include fastcgi_params;
+            fastcgi_param SCRIPT_FILENAME /status;
+            fastcgi_pass 127.0.0.1:9000;
+        }
+    }
+}
+```
