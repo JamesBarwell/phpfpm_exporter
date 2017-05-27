@@ -15,9 +15,9 @@ while true; do
     RESPONSE=$(/usr/bin/wget -qO - ${URI})
     EXIT_STATUS=$?
     if [ $EXIT_STATUS != 0 ]; then
-        echo "Error: failed to retrieve status from PHP-FPM. wget exit code was: ${EXIT_STATUS}. wget response was: ${RESPONSE}"
+        /bin/echo "phpfpm failure. exit status: ${EXIT_STATUS}. wget response was: ${RESPONSE}"
     else
-        /bin/echo $RESPONSE
+        /bin/echo "${RESPONSE} phpfpm success"
     fi
 
     /bin/sleep 5

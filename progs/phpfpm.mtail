@@ -1,3 +1,4 @@
+gauge phpfpm_up
 gauge phpfpm_start_since
 gauge phpfpm_accepted_conn
 gauge phpfpm_listen_queue
@@ -9,6 +10,14 @@ gauge phpfpm_total_processes
 gauge phpfpm_max_active_processes
 gauge phpfpm_max_children_reached
 gauge phpfpm_slow_requests
+
+/phpfpm success/ {
+  phpfpm_up = 1
+}
+
+/phpfpm failure/ {
+  phpfpm_up = 0
+}
 
 /start since:\s*(?P<value>\d+)/ {
   phpfpm_start_since = $value

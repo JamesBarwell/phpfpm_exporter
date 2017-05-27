@@ -35,6 +35,8 @@ In the `test` directory, there is a script `run` which uses docker-compose to br
 ## Example output
 
 ```
+# TYPE phpfpm_up gauge
+phpfpm_up{prog="phpfpm.mtail",instance="f206ebacdab4"} 1
 # TYPE phpfpm_start_since gauge
 phpfpm_start_since{prog="phpfpm.mtail",instance="f206ebacdab4"} 369
 # TYPE phpfpm_accepted_conn gauge
