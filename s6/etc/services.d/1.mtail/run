@@ -1,0 +1,5 @@
+#!/usr/bin/with-contenv sh
+
+METRICS_PORT=${METRICS_PORT:-9253}
+
+exec /bin/mtail -logtostderr -port ${METRICS_PORT} -progs /etc/mtail -logs /var/log/phpfpm/current -alsologtostderr

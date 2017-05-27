@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/with-contenv sh
 
 PHPFPM_PORT=${PHPFPM_PORT:-80}
 PHPFPM_PATH=${PHPFPM_PATH:-"/status"}
@@ -17,7 +17,7 @@ while true; do
     if [ $EXIT_STATUS != 0 ]; then
         echo "Error: failed to retrieve status from PHP-FPM. wget exit code was: ${EXIT_STATUS}. wget response was: ${RESPONSE}"
     else
-        /bin/echo $RESPONSE >> /var/log/phpfpm.log
+        /bin/echo $RESPONSE
     fi
 
     /bin/sleep 5
