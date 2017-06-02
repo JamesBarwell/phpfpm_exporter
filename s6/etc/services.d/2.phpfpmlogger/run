@@ -16,6 +16,8 @@ while true; do
     EXIT_STATUS=$?
     if [ $EXIT_STATUS != 0 ]; then
         /bin/echo "phpfpm failure. exit status: ${EXIT_STATUS}. wget response was: ${RESPONSE}"
+        # Reset any gauge metrics
+        /bin/echo "listen queue: 0 max listen queue: 0 listen queue len: 0 idle processes: 0 active processes: 0 total processes: 0 slow requests: 0"
     else
         /bin/echo "${RESPONSE} phpfpm success"
     fi
