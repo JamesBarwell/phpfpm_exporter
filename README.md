@@ -28,9 +28,27 @@ Please ensure that you set your PHP-FPM and webserver config to allow external a
 
 You may need to adjust your webserver config to allow access to this path. See the nginx example config below for a suggestion of how it may be configured.
 
+## Scrape behaviour and troubleshooting
+
+This exporter works by scraping the PHP-FPM status page, and as such is reliant on being able to access that page. If it cannot connect, it will set `phpfpm_up 0` and will reset the following metrics to `0` until it is next able to connect:
+- listen_queue
+- max_listen queue
+- listen_queue_len
+- idle_processes
+- active_processes
+- total_processes
+- slow_requests
+
+After scraping the PHP-FPM status page, the result is dumped into the logfile at `/var/log/phpfpm/current`. This logfile is watched by the `mtail` process and used to generate the metrics interface. If you encounter issues or unexpected metric values, please examine this logfile and check whether it is receiving the correct output. Log entries should look like this:
+
+```
+pool: www process manager: dynamic start time: 26/May/2017:07:11:29 +0000 start since: 10 accepted conn: 2 listen queue: 0 max listen queue: 0 listen queue len: 0 idle processes: 1 active processes: 1 total processes: 2 max active processes: 1 max children reached: 0 slow requests: 0
+```
+
+
 ## Testing
 
-In the `test` directory, there is a script `run` which uses docker-compose to bring up a PHP-FPM webserver and an instance of this exporter. The exporter will bind to localhost 9253 and can be queried at `/metrics`.
+In the `test` directory, there is a script `run` which uses docker-compose to bring up a PHP-FPM webserver and an instance of this exporter. The exporter will bind to `localhost:9253` and can be queried at `/metrics`.
 
 ## Example output
 
