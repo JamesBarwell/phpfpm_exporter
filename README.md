@@ -125,3 +125,12 @@ http {
 ## Licence
 
 This project is available under the terms of the MIT licence. See the included licence agreement in this repository.
+
+
+## Credits
+
+This project relies on the following:
+
+* [alpine](https://www.alpinelinux.org/)
+* [mtail](https://github.com/google/mtail)
+* [s6-overlay](https://github.com/just-containers/s6-overlay)
