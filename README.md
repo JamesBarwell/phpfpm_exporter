@@ -121,3 +121,7 @@ http {
     }
 }
 ```
+
+## Licence
+
+This project is available under the terms of the MIT licence. See the included licence agreement in this repository.
